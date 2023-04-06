@@ -67,10 +67,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $hashed_password = sha1($password);
         $stm->bind_param('ssssis', $firstname, $lastname, $username, $hashed_password, $registered_date, $status);
         $result = $stm->execute();
+
+        if ($result){
+            header ('location: login.php');
+        }else{
+            $error = 'Something went wrong';
+        }
     }
-
 }
-
 ?>
 
 
@@ -92,6 +96,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <h3 class="card-title">Register</h3>
 
                         <form action="" class="form" method="post">
+
+                            <?php if (!empty($error)): ?>
+                                <div class="alert alert-danger" role="alert">
+                                <?=$error?>
+                                </div>
+                            <?php endif; ?>
 
                             <div class="form-floating mb-3">
                                 <input type="text" name="firstname" class="form-control <?=empty($firstname_err) ?'': 'is-invalid'?> " id="firstname" value="<?=$firstname?>">
@@ -122,7 +132,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <label for="con_password">Confirm Password</label>
                                 <div class="invalid-feedback"><?=$con_password_err?></div>
                             </div> <!--form-floating-->
-
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Register</button>
