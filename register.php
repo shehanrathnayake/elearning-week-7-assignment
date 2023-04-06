@@ -57,13 +57,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }
 
+    //Adding user to the database
+
     if (!$validation_failed){
 
         $stm = $con->prepare("INSERT INTO users (first_name, last_name, username, password, registered_date, status) VALUES (?, ?, ?, ?, ?, ?)");
-        $stm->bind_param('ssssis', $firstname, $lastname, $username, sha1($password), time(), 'active');
+        $status = 'active';
+        $registered_date = time();
+        $hashed_password = sha1($password);
+        $stm->bind_param('ssssis', $firstname, $lastname, $username, $hashed_password, $registered_date, $status);
         $result = $stm->execute();
-
-        var_dump($result);
     }
 
 }
