@@ -4,7 +4,31 @@ session_start();
 if(empty($_SESSION['logged_in'])){
     header('location: login.php');
 }
+/*
+require_once 'db-connect.php';
 
+// retrieve user data from the database
+$sql_all = "SELECT * FROM users";
+$result_all = $con->query($sql_all);
+
+// create table headers
+echo "<table>";
+echo "<tr><th>Full Name</th><th>Username</th><th>Registered Date</th></tr>";
+
+// loop through user data and create table rows
+if ($result_all->num_rows > 0) {
+    while ($row = $result_all->fetch_assoc()) {
+
+        echo "<tr><td>" . $row["first_name"] . " " . $row["last_name"] . "</td><td>" . $row["username"] . "</td><td>" . date('Y-m-d H:i:s',$row['registered_date']) . "</td></tr>";
+    }
+} else {
+    echo "<tr><td colspan='3'>No users found</td></tr>";
+}
+
+// close the table
+echo "</table>";
+*/
+// close the database connection
 ?>
 
 <!DOCTYPE html>
@@ -20,5 +44,43 @@ if(empty($_SESSION['logged_in'])){
     <h1 class="row justify-content-center mt-5">
         Hello <?=$_SESSION['user']['first_name']?> <?=$_SESSION['user']['last_name']?>!
     </h1>
+
+    <section class="all_users d-flex flex-column align-items-center">
+        <h2 class="mt-5">All Users In The List</h2>
+        <div class="mt-5">
+            <?php
+            require_once 'db-connect.php';
+
+            // retrieve user data from the database
+            $sql_all = "SELECT * FROM users";
+            $result_all = $con->query($sql_all);
+        
+            // create table headers
+            echo "<table class='table pe-25'>";
+            echo "<tr><th>Full Name</th><th>Username</th><th>Registered Date</th></tr>";
+        
+            // loop through user data and create table rows
+            if ($result_all->num_rows > 0) {
+                while ($row = $result_all->fetch_assoc()) {
+        
+                    echo "<tr><td>" . $row["first_name"] . " " . $row["last_name"] . "</td><td>" . $row["username"] . "</td><td>" . date('Y-m-d H:i:s',$row['registered_date']) . "</td></tr>";
+                }
+            } else {
+                echo "<tr><td colspan='3'>No users found</td></tr>";
+            }
+        
+            // close the table
+            echo "</table>";
+
+            ?>
+
+
+        </div>
+        
+
+    </section>
+    
+
+
 </body>
 </html>
