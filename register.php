@@ -32,7 +32,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $username_err = "Please enter username";
         $validation_failed = True;
     }else{
+
+        //checking duplicate usernames
         $username = trim($_POST['username']);
+        $sql_username = "SELECT * FROM users WHERE username = '".$username."'";
+        $result_user = $con->query($sql_username);
+
+        if ($result_user->num_rows > 0) {
+            $validation_failed = true;
+            $username_err = "Username is already taken";
+        }
+        
     }
 
     //password validation
