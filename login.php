@@ -26,7 +26,7 @@
             $password = trim($_POST['password']);
         }
 
-        //check if there are no errors
+        //check if there are no errors and directing to index file
 
         if (empty($username_err) && empty($password_err)){
 
@@ -35,30 +35,21 @@
 
             if ($result->num_rows > 0){
                 $password_hash = sha1($password);
-                $sql_pass = "SELECT * FROM users WHERE password = '".$password_hash."'";
-                $result_pass = $con->query($sql_pass);
+                $user = $result->fetch_assoc();
 
-                if ($result_pass->num_rows > 0){
-                    $user = $result_pass->fetch_assoc();
-                    //var_dump($user);
+                if ($user['password'] == $password_hash){
+                    $_SESSION['logged_in'] = true;
+                    $_SESSION['user'] = array(
+                        'first_name' => $user['first_name'],
+                        'last_name' => $user['last_name'],
+                        'id' => $user['id']
+                    );
 
-                    if ($user['password'] == sha1($password)){
-                        $_SESSION['logged_in'] = true;
-                        $_SESSION['user'] = array(
-                            'first_name' => $user['first_name'],
-                            'last_name' => $user['last_name'],
-                            'id' => $user['id']
-                        );
+                    header('location: index.php');
+                    exit();
 
-                        header('location: index.php');
-                        exit();
-                    }
-
-                }else $password_err = "Invalid password";
-
+                } else $password_err = "Invalid password";
             }else $username_err = "Invalid username";
-
-            
         }
     }
 ?>
