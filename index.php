@@ -23,7 +23,7 @@ if(empty($_SESSION['logged_in'])){
         </div>
         
     </header>
-    <h1 class="row justify-content-center mt-5">
+    <h1 class="row justify-content-center mt-3">
         Hello <?=$_SESSION['user']['first_name']?> <?=$_SESSION['user']['last_name']?>!
     </h1>
 
