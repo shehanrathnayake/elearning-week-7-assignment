@@ -83,6 +83,7 @@
                             </div> <!--form-floating-->
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Login</button>
+                                <a href="register.php" class="mt-3">Not a user? Register</a>
                             </div> <!--d-grid-->
                         </form>
                     </div> <!--card-body-->
