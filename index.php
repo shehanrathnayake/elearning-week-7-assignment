@@ -17,6 +17,12 @@ if(empty($_SESSION['logged_in'])){
     <title>Index</title>
 </head>
 <body>
+    <header>
+        <div class="d-flex flex-column align-items-end">
+            <a href="logout.php" class="btn btn-primary">Log out</a>
+        </div>
+        
+    </header>
     <h1 class="row justify-content-center mt-5">
         Hello <?=$_SESSION['user']['first_name']?> <?=$_SESSION['user']['last_name']?>!
     </h1>
